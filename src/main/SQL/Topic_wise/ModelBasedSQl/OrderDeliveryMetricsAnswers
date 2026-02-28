@@ -1,0 +1,197 @@
+✅ Q1 — Total delivered orders per city (last 30 days)
+SELECT
+  c.city_name,
+  COUNT(*) AS total_orders_delivered
+FROM orders o
+JOIN cities c
+  ON o.city_id = c.city_id
+WHERE o.order_status = 'DELIVERED'
+  AND DATE(o.order_delivered_ts) >= CURRENT_DATE - INTERVAL 30 DAY
+GROUP BY c.city_name;
+
+✅ Q2 — Top 3 restaurants by revenue in the last 30 days ⭐
+WITH revenue_cte AS (
+  SELECT
+    restaurant_id,
+    SUM(order_amount) AS total_revenue
+  FROM orders
+  WHERE order_status = 'DELIVERED'
+    AND DATE(order_delivered_ts) >= CURRENT_DATE - INTERVAL 30 DAY
+  GROUP BY restaurant_id
+),
+ranked AS (
+  SELECT
+    restaurant_id,
+    total_revenue,
+    ROW_NUMBER() OVER (
+      ORDER BY total_revenue DESC
+    ) AS rnk
+  FROM revenue_cte
+)
+SELECT
+  restaurant_id,
+  total_revenue
+FROM ranked
+WHERE rnk <= 3;
+
+✅ Q3 — Delivered orders & revenue per restaurant (last 7 days)
+SELECT
+  restaurant_id,
+  COUNT(*) AS total_delivered_orders,
+  SUM(order_amount) AS total_revenue
+FROM orders
+WHERE order_status = 'DELIVERED'
+  AND DATE(order_delivered_ts) >= CURRENT_DATE - INTERVAL 6 DAY
+GROUP BY restaurant_id;
+
+
+📌 This counts today + previous 6 days = 7-day window
+(acceptable in interviews if you explain it)
+
+✅ Q4 — 90th percentile delivery time per city (HARD, REAL QUESTION) ⭐⭐⭐
+🧠 Delivery time = order_delivered_ts - order_created_ts
+WITH delivery_times AS (
+  SELECT
+    city_id,
+    TIMESTAMPDIFF(
+      SECOND,
+      order_created_ts,
+      order_delivered_ts
+    ) AS delivery_time_sec
+  FROM orders
+  WHERE order_status = 'DELIVERED'
+),
+ranked AS (
+  SELECT
+    city_id,
+    delivery_time_sec,
+    ROW_NUMBER() OVER (
+      PARTITION BY city_id
+      ORDER BY delivery_time_sec
+    ) AS rn,
+    COUNT(*) OVER (
+      PARTITION BY city_id
+    ) AS total_cnt
+  FROM delivery_times
+)
+SELECT
+  city_id,
+  delivery_time_sec AS p90_delivery_time_sec
+FROM ranked
+WHERE rn = CEIL(0.9 * total_cnt);
+
+💬 What to say in interview
+
+“MySQL doesn’t support percentile functions, so I rank delivery times per city and select the row at the 90th percentile.”
+
+This is exactly what they expect.
+
+✅ Q5 — Average delivery time per city per day
+SELECT
+  city_id,
+  DATE(order_delivered_ts) AS order_date,
+  AVG(
+    TIMESTAMPDIFF(
+      SECOND,
+      order_created_ts,
+      order_delivered_ts
+    )
+  ) AS avg_delivery_time_sec
+FROM orders
+WHERE order_status = 'DELIVERED'
+GROUP BY city_id, DATE(order_delivered_ts);
+
+✅ Q6 — Day-over-day revenue change per restaurant
+WITH daily_revenue AS (
+  SELECT
+    restaurant_id,
+    DATE(order_delivered_ts) AS order_date,
+    SUM(order_amount) AS daily_revenue
+  FROM orders
+  WHERE order_status = 'DELIVERED'
+  GROUP BY restaurant_id, DATE(order_delivered_ts)
+)
+SELECT
+  restaurant_id,
+  order_date,
+  daily_revenue -
+    LAG(daily_revenue) OVER (
+      PARTITION BY restaurant_id
+      ORDER BY order_date
+    ) AS day_over_day_revenue_change
+FROM daily_revenue
+ORDER BY restaurant_id, order_date;
+
+✅ Q7 — Restaurants with created but zero delivered orders (last 14 days)
+WITH order_cnt AS (
+  SELECT
+    restaurant_id,
+    SUM(
+      CASE
+        WHEN order_status = 'CREATED'
+         AND DATE(order_created_ts) >= CURRENT_DATE - INTERVAL 14 DAY
+        THEN 1 ELSE 0
+      END
+    ) AS created_cnt,
+    SUM(
+      CASE
+        WHEN order_status = 'DELIVERED'
+         AND DATE(order_delivered_ts) >= CURRENT_DATE - INTERVAL 14 DAY
+        THEN 1 ELSE 0
+      END
+    ) AS delivered_cnt
+  FROM orders
+  GROUP BY restaurant_id
+)
+SELECT restaurant_id
+FROM order_cnt
+WHERE created_cnt > 0
+  AND delivered_cnt = 0;
+
+✅ Q8 — Restaurant with highest average order value per city
+
+(min 10 delivered orders)
+
+WITH rest_stats AS (
+  SELECT
+    city_id,
+    restaurant_id,
+    COUNT(*) AS delivered_orders,
+    AVG(order_amount) AS avg_order_value
+  FROM orders
+  WHERE order_status = 'DELIVERED'
+  GROUP BY city_id, restaurant_id
+  HAVING COUNT(*) >= 10
+),
+ranked AS (
+  SELECT
+    city_id,
+    restaurant_id,
+    avg_order_value,
+    ROW_NUMBER() OVER (
+      PARTITION BY city_id
+      ORDER BY avg_order_value DESC
+    ) AS rnk
+  FROM rest_stats
+)
+SELECT
+  city_id,
+  restaurant_id,
+  avg_order_value
+FROM ranked
+WHERE rnk = 1;
+
+✅ Q9 — Funnel metrics per city (Created → Picked → Delivered)
+SELECT
+  city_id,
+  SUM(CASE WHEN order_status = 'CREATED' THEN 1 ELSE 0 END) AS created_orders,
+  SUM(CASE WHEN order_status = 'PICKED' THEN 1 ELSE 0 END) AS picked_orders,
+  SUM(CASE WHEN order_status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered_orders,
+  ROUND(
+    100.0 *
+    SUM(CASE WHEN order_status = 'DELIVERED' THEN 1 ELSE 0 END) /
+    NULLIF(SUM(CASE WHEN order_status = 'CREATED' THEN 1 ELSE 0 END), 0),
+    2
+  ) AS delivery_rate_pct
+FROM orders
+GROUP BY city_id;

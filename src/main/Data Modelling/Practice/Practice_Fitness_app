@@ -1,0 +1,54 @@
+OLAP OR OLTP
+business questions
+volume
+events
+batch or streming
+
+
+fact_orders grain -  grain - 1 row per order
+
+
+
+fact_order_events - grain - 1 row per event in order
+
+
+
+dim_users - attributes of user
+
+dim_location - location of orders
+
+dim_date - Date Dimension
+
+dim_category - Category of item
+
+
+Top customers per repeat orders
+
+select c.customer_name, count(*) as order_cnt,
+sum(o.order_amt) as total_spent
+from orders o
+where o.order_status = 'Completed'
+group by o.customer_id
+having count(*) > 1
+order by order_cnt
+
+TOp customers by repeat order by city last 30 days
+
+select l.city ,count(*) as as total_order_cnt
+from orders o join dim_date d on o.date_id = d.date_id
+join location l on o.location_id = l.location_id
+where o.date > date_sub(CurrDate(), Interval '30' Day)
+and o.order_status = 'Completed'
+group by l.city
+having count(*) > 1
+order by total_order_cnt desc
+
+
+
+
+
+
+
+
+
+

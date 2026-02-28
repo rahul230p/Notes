@@ -1,0 +1,276 @@
+🍎 Topic 2: SQL Joins (with Schema + Business Context)
+
+Each question below mirrors what Apple’s Global BI or Data Platform teams ask —
+you’ll see how joins are used to derive insights from multiple related tables.
+
+🟢 Q1. Total Spend per Customer (INNER JOIN)
+🧱 Table Schema
+
+customers
+
+customer_id	customer_name	region_id
+1	Alice	1
+2	Bob	2
+3	Charlie	1
+
+orders
+
+order_id	customer_id	amount
+101	1	100
+102	1	150
+103	2	200
+🎯 Question
+
+Find each customer's total spend.
+
+✅ Query
+SELECT
+    c.customer_name,
+    SUM(o.amount) AS total_spend
+FROM customers c
+JOIN orders o
+    ON c.customer_id = o.customer_id
+GROUP BY c.customer_name;
+
+🟢 Q2. Customers Who Have Not Placed Any Orders (LEFT JOIN)
+🧱 Table Schema
+
+Same as above.
+
+🎯 Question
+
+Find all customers who haven’t placed any orders yet.
+
+✅ Query
+SELECT
+    c.customer_name
+FROM customers c
+LEFT JOIN orders o
+    ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+
+🟢 Q3. Orders Without a Valid Customer (RIGHT JOIN)
+🧱 Table Schema
+
+orders
+
+order_id	customer_id	amount
+201	10	100
+
+customers
+
+customer_id	customer_name
+1	Alice
+2	Bob
+🎯 Question
+
+Find all orders that reference a customer not in the customers table.
+
+✅ Query
+SELECT
+    o.order_id,
+    o.customer_id,
+    o.amount
+FROM customers c
+RIGHT JOIN orders o
+    ON c.customer_id = o.customer_id
+WHERE c.customer_id IS NULL;
+
+🟠 Q4. Manager–Employee Relationship (SELF JOIN)
+🧱 Table Schema
+
+employees
+
+emp_id	emp_name	manager_id
+1	Alice	NULL
+2	Bob	1
+3	Charlie	1
+4	David	2
+🎯 Question
+
+Show each employee with their manager's name.
+
+✅ Query
+SELECT
+    e.emp_name AS employee,
+    m.emp_name AS manager
+FROM employees e
+LEFT JOIN employees m
+    ON e.manager_id = m.emp_id;
+
+🟠 Q5. Customers in the Same City (SELF JOIN)
+🧱 Table Schema
+
+customers
+
+customer_id	customer_name	city
+1	Alice	London
+2	Bob	Paris
+3	Charlie	London
+🎯 Question
+
+List all unique pairs of customers living in the same city.
+
+✅ Query
+SELECT
+    a.customer_name AS customer1,
+    b.customer_name AS customer2,
+    a.city
+FROM customers a
+JOIN customers b
+    ON a.city = b.city AND a.customer_id < b.customer_id;
+
+🟠 Q6. All Region–Product Combinations (CROSS JOIN)
+🧱 Table Schema
+
+regions
+
+region_id	region_name
+1	East
+2	West
+
+products
+
+product_id	product_name
+10	iPhone
+20	iPad
+🎯 Question
+
+Generate all possible region–product combinations.
+
+✅ Query
+SELECT
+    r.region_name,
+    p.product_name
+FROM regions r
+CROSS JOIN products p;
+
+🔵 Q7. Total Revenue per Product per Region (MULTI-JOIN)
+🧱 Table Schema
+
+orders
+
+order_id	customer_id	product_id	amount
+1	101	10	500
+2	102	20	300
+3	101	20	200
+
+customers
+
+customer_id	customer_name	region_id
+101	Alice	1
+102	Bob	2
+
+regions
+
+region_id	region_name
+1	East
+2	West
+
+products
+
+product_id	product_name
+10	iPhone
+20	iPad
+🎯 Question
+
+Find total revenue by region and product.
+
+✅ Query
+SELECT
+    r.region_name,
+    p.product_name,
+    SUM(o.amount) AS total_revenue
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+JOIN regions r ON c.region_id = r.region_id
+JOIN products p ON o.product_id = p.product_id
+GROUP BY r.region_name, p.product_name;
+
+🔵 Q8. Customers Who Bought Products from Multiple Categories
+🧱 Table Schema
+
+orders
+
+order_id	customer_id	product_id
+1	101	10
+2	101	11
+3	102	10
+
+products
+
+product_id	product_name	category
+10	iPhone	Electronics
+11	Sofa	Furniture
+🎯 Question
+
+Find customers who have purchased from more than one category.
+
+✅ Query
+SELECT
+    o.customer_id
+FROM orders o
+JOIN products p ON o.product_id = p.product_id
+GROUP BY o.customer_id
+HAVING COUNT(DISTINCT p.category) > 1;
+
+🔵 Q9. Most Popular Product per Region (Apple Favorite)
+🧱 Table Schema
+
+Same as Q7.
+
+🎯 Question
+
+Find the top-selling product (by revenue) in each region.
+
+✅ Query
+WITH region_sales AS (
+    SELECT
+        r.region_name,
+        p.product_name,
+        SUM(o.amount) AS total_revenue
+    FROM orders o
+    JOIN customers c ON o.customer_id = c.customer_id
+    JOIN regions r ON c.region_id = r.region_id
+    JOIN products p ON o.product_id = p.product_id
+    GROUP BY r.region_name, p.product_name
+)
+SELECT region_name, product_name, total_revenue
+FROM (
+    SELECT *,
+           RANK() OVER (PARTITION BY region_name ORDER BY total_revenue DESC) AS rnk
+    FROM region_sales
+) ranked
+WHERE rnk = 1;
+
+🔵 Q10. Average Order Value per Customer (Nested Joins + Aggregation)
+🧱 Table Schema
+
+Same as Q7.
+
+🎯 Question
+
+Find each customer’s average order value (AOV).
+
+✅ Query
+SELECT
+    c.customer_name,
+    AVG(o.amount) AS avg_order_value
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_name;
+
+✅ What You’ll Master
+
+INNER, LEFT, RIGHT, SELF, CROSS joins
+
+Handling nulls and missing data
+
+Multi-table joins with dimensions
+
+Combining joins + aggregation + window functions
+
+Analytical reasoning Apple looks for
+
+Would you like to move next to Topic 3 → Filtering & Subqueries (IN vs EXISTS, correlated, nested, etc.),
+again with table schema + example data + all variants?

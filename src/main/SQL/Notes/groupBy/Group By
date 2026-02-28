@@ -1,0 +1,172 @@
+1️⃣ THE GOLDEN RULE OF GROUP BY (NON-NEGOTIABLE)
+
+Every column in SELECT must be either
+
+Aggregated, OR
+
+Present in GROUP BY
+
+Nothing else is allowed.
+
+Examples
+
+❌ WRONG
+
+SELECT user_id, revenue
+FROM sales
+GROUP BY user_id;
+
+
+Why?
+revenue is neither aggregated nor grouped.
+
+✅ CORRECT
+
+SELECT user_id, SUM(revenue)
+FROM sales
+GROUP BY user_id;
+
+2️⃣ STEP-BY-STEP MECHANICAL PROCESS (DO THIS EVERY TIME)
+
+When writing a query, do this in order:
+
+Step 1: Decide the grain
+
+Ask:
+
+“What does ONE row of my result represent?”
+
+Examples:
+
+One row per user
+
+One row per user per day
+
+One row per month
+
+This step decides your GROUP BY.
+
+Step 2: Put ONLY grain columns in GROUP BY
+
+If grain = “one row per user per day”
+→ GROUP BY user_id, date
+
+Nothing else goes there.
+
+Step 3: Everything else must be aggregated
+
+If a column is NOT part of the grain, it must be inside:
+
+SUM()
+
+COUNT()
+
+AVG()
+
+MIN()
+
+MAX()
+
+3️⃣ HOW TO DECIDE: WHERE vs HAVING (NO CONFUSION VERSION)
+🔹 Rule 1 (Memorize)
+
+WHERE filters rows
+HAVING filters groups
+
+🔹 Rule 2 (Even simpler)
+
+If the condition uses raw columns → WHERE
+
+If the condition uses aggregate functions → HAVING
+
+Decision Table
+Condition uses	Use
+activity_type = 'Walking'	WHERE
+date >= '2024-01-01'	WHERE
+SUM(revenue) > 1000	HAVING
+COUNT(*) > 5	HAVING
+AVG(steps) > 5000	HAVING
+4️⃣ CANONICAL PATTERNS (MEMORIZE THESE)
+Pattern 1: Aggregate per group
+
+“Total per user”
+
+SELECT user_id, SUM(revenue)
+FROM sales
+GROUP BY user_id;
+
+Pattern 2: Filter rows before grouping
+
+“Only walking activity”
+
+SELECT user_id, AVG(steps)
+FROM activity
+WHERE activity_type = 'Walking'
+GROUP BY user_id;
+
+Pattern 3: Filter groups after grouping
+
+“Users with more than 5 logins”
+
+SELECT user_id, COUNT(*) AS login_count
+FROM logins
+GROUP BY user_id
+HAVING COUNT(*) > 5;
+
+Pattern 4: Both WHERE and HAVING
+
+“Walking users with avg steps > 5000”
+
+SELECT user_id, AVG(steps)
+FROM activity
+WHERE activity_type = 'Walking'
+GROUP BY user_id
+HAVING AVG(steps) > 5000;
+
+5️⃣ VERY COMMON TRAPS (AVOID THESE)
+❌ Trap 1: Putting non-aggregated column in SELECT
+SELECT user_id, date, AVG(steps)
+FROM activity
+GROUP BY user_id;
+
+
+Why wrong?
+date is neither aggregated nor grouped.
+
+❌ Trap 2: Using HAVING for row filters
+HAVING activity_type = 'Walking'
+
+
+Wrong because:
+activity_type is not an aggregate.
+
+❌ Trap 3: Grouping too much
+GROUP BY user_id, date, steps
+
+
+This breaks aggregation because:
+You grouped by the measure itself.
+
+6️⃣ QUICK SELF-CHECK (DO THIS IN YOUR HEAD)
+
+Before submitting SQL, ask:
+
+What is my result grain?
+
+Are all SELECT columns either:
+
+in GROUP BY, or
+
+aggregated?
+
+Are row filters in WHERE?
+
+Are aggregate filters in HAVING?
+
+If all are “yes” → query is correct.
+
+7️⃣ INTERVIEW-READY ONE-LINER (USE THIS)
+
+“I define the grain first, group only on grain columns, aggregate everything else, use WHERE for row filters and HAVING for aggregate filters.”
+
+That sentence alone clears confusion and sounds senior.

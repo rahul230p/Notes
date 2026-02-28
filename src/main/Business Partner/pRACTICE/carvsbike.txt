@@ -1,0 +1,45 @@
+Business Clarification - motorized bike vs non motorized
+                           Increase in market share or increase in revenue
+                           Reduction in delivery times
+
+                          Data Sources - order events
+                                        dasher events
+                                        merchant events
+
+
+Hypothesis
+Bikes deliveries are 10- 20% faster in dense areas
+Bikes regulation are adhered to
+There is going to 10% lesser commmisions
+Biker will carry lesser volumes
+Bikes will cover 3 miles
+
+
+
+3 way marketplace
+
+Phase wise rollout
+
+Pilot  1000 customer with early access   50 dashers  10 merchants   1 week
+         dense urban regions
+
+Customer Demand
+Orders per MAU (Bike vs Car) ⭐
+Total No of orders placed for delivery system car vs bike
+incremental DAU
+Repeat Rate of Car vs Bike
+D7 retention of car vs bike delivery customer
+
+Dasher
+Earnings per hour per dasher    10 % diff
+Delivery time car vs bike      North star
+Pilfrage per day car vs bike   5 %
+Dasher utilization    85 %
+
+
+Merchant (Supply)
+Order Volume per day   5%
+No of orders per day   5%
+Take rate per day per delivery vehicle  remains same
+
+

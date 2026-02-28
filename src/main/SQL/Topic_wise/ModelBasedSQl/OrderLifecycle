@@ -1,0 +1,75 @@
+📊 MODEL 2 — DOORDASH (ORDER LIFECYCLE ANALYTICS)
+
+orders
+column	type
+order_id	INT
+customer_id	INT
+dasher_id	INT
+restaurant_id	INT
+city_id	INT
+order_created_ts	TIMESTAMP
+order_delivered_ts	TIMESTAMP
+order_status	VARCHAR — ('CREATED','ASSIGNED','DELIVERED','CANCELLED')
+order_amount	DECIMAL
+
+dashers
+column	type
+dasher_id	INT
+city_id	INT
+signup_date	DATE
+
+restaurants
+column	type
+restaurant_id	INT
+city_id	INT
+restaurant_name	VARCHAR
+🧠 QUESTIONS (NEW, DOORDASH-STYLE)
+🟢 Q1 — EASY
+
+For each city, find the total number of delivered orders.
+
+🟢 Q2 — EASY
+
+For each day, find the number of orders created and number of orders delivered.
+
+🟡 Q3 — MEDIUM
+
+For each dasher, find the total number of delivered orders they completed.
+
+🟡 Q4 — MEDIUM
+
+Find dashers who delivered more than 5 orders in a single day.
+
+🟡 Q5 — MEDIUM
+
+For each restaurant, calculate the average delivery time
+(order_delivered_ts - order_created_ts) for delivered orders only.
+
+🔴 Q6 — HARD
+
+For each city and day, calculate the day-over-day change in delivered orders.
+
+🔴 Q7 — HARD
+
+For each dasher, calculate the 7-day rolling count of delivered orders
+(MySQL-compatible).
+
+🔴 Q8 — HARD
+
+Find restaurants that had orders created but zero delivered orders in the last 14 days.
+
+🔴 Q9 — HARD
+
+For each city, find the top dasher based on average deliveries per active day.
+
+🔴 Q10 — HARD (ANALYTICS / FUNNEL)
+
+For each city, calculate:
+
+total orders created
+
+total orders assigned
+
+total orders delivered
+
+delivery rate (% delivered / created)

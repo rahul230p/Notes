@@ -1,0 +1,89 @@
+🟡 TOPIC 3: JOINS (INNER / LEFT / SELF / ANTI-JOIN)
+
+Solve all 4.
+
+✅ Question 1 — Employees Earning More Than Their Managers
+
+LeetCode 181
+
+Table: Employee
+id	name	salary	managerId
+1	Joe	70000	3
+2	Henry	80000	4
+3	Sam	60000	NULL
+4	Max	90000	NULL
+Task
+
+Find employees who earn more than their managers.
+
+Expected Output
+name
+Joe
+✅ Question 2 — Customers Who Never Order (Anti-Join)
+
+LeetCode 183 (revisited, but join-focused)
+
+Table: Customers
+id	name
+1	Joe
+2	Henry
+3	Sam
+4	Max
+Table: Orders
+id	customerId
+1	3
+2	1
+Task
+
+Return customers who never placed an order.
+
+Expected Output
+name
+Henry
+Max
+
+👉 Use LEFT JOIN or NOT EXISTS.
+
+✅ Question 3 — Department Highest Salary
+
+LeetCode 184
+
+Table: Employee
+id	name	salary	departmentId
+1	Joe	70000	1
+2	Jim	90000	1
+3	Henry	80000	2
+4	Sam	60000	2
+5	Max	90000	1
+Table: Department
+id	name
+1	IT
+2	Sales
+Task
+
+Find employees who have the highest salary in each department.
+
+Expected Output
+Department	Employee	Salary
+IT	Jim	90000
+IT	Max	90000
+Sales	Henry	80000
+✅ Question 4 — Managers With at Least 5 Direct Reports
+
+LeetCode 570
+
+Table: Employee
+id	name	department	managerId
+101	John	A	NULL
+102	Dan	A	101
+103	James	A	101
+104	Amy	A	101
+105	Anne	A	101
+106	Ron	B	101
+Task
+
+Find managers with at least 5 direct reports.
+
+Expected Output
+name
+John

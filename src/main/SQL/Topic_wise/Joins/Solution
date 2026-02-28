@@ -1,0 +1,25 @@
+select e1.name from
+Employee e1 join Employee e2
+on e1.manager_id = e2.id and e1.salary > e2.salary
+
+select name
+from Customers c left join Orders o on c.id = o.customer_id
+where o.customer_id is null
+
+
+select d.name,e.name, e.salary
+from Employee e join Department d on e.departmentId = d.id
+where e.salary =
+(select max(salary) from Employee where departmentId = e.departmentId)
+
+
+
+
+select mng.name from Employee emp
+join Employee mng on emp.managerId = mng.id
+group by mng.id, mng.id
+having count(*) >=5
+
+
+
+

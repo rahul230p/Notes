@@ -1,0 +1,47 @@
+Python: LeetCode easy medium-level questions, primarily focused on sliding window techniques and list manipulations.
+
+SQL: A total of 4 questions.
+2 easy queries
+1 medium query
+1 hard query
+
+Each Section had a timebox of around 20-25 minutes.
+
+Overall, the interview focused on strong problem-solving skills in both Python and SQL.
+
+
+
+
+Interview
+
+I gave a technical screening interview. It had 4 SQL and 1 python. I was able to complete 3 SQL and 1 python(o(n)) solution , explained my thoughts throughout the interview. However I was rejected, company didn’t provide any feedback. They use hackkerank and my 3 SQL query was right in postgresql but Hackkerrank only supports mysql, I got stuck finding a different approach to solve this problem to compile in MYSQL and lost time. The interviewer was not helpful at all, he saw my approach and syntax was correct in postgresql, yet waited for me to find a mysql solution that passed all test cases. Despite of solving 3 questions in SQl and 1 in python with all test cases , they rejected. They are looking for robots not humans.
+
+Interview questions [1]
+
+Question 1
+
+Sum(case when attribute is true) Unions Hard SQL using window functions Python leetcode Easy
+
+Coming to the preparation point of view on SQL you can prepare all basis sql, joins , CTE, merge statement, dimentional and fact tables .
+For python you can prepare for basis of arrays operations like for list , set , tuple and dictionaries .
+
+
+
+There were 4 SQL questions based on a single data model, with a medium level of difficulty (LC Medium ). Python question was from HackerRank that involved working with two nested lists and looping through them to generate a dictionary. I could not find any questions similar to the python question.
+
+
+Given an array of task durations (in minutes), return the pairs of tasks that can be completed within 60 minutes. For example, for [1, 43, 20, 59, 30, 30], return [[0, 3], [4, 5]].
+
+
+
+1. Pre-Screen (SQL + Python)
+This was a fast-paced round focusing on hands-on coding. It included a mix of analytics questions and coding logic.
+
+How I Prepared:
+SQL: Practiced queries involving window functions, aggregates, joins, and groupings.
+Python: Focused on data structure manipulation, custom sorting, and writing clean, reusable code.
+The biggest takeaway: Get comfortable with time-based aggregations and join logic that replicates real-world analytics pipelines.
+
+
+
+

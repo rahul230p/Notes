@@ -1,0 +1,122 @@
+ doordash system design
+ analytics usecase
+
+
+
+ Functional -
+
+ Batch or realtime - both
+
+
+ use case / kpis
+
+ batch - dau mau tau, enagagement , revenue
+ streaming - funnel , deliveries performace
+
+ consumer - Data ops, Data Analyst , Data engineer, Data Scientist , business execs
+
+ Data source - app events, outside sources
+
+
+ Non functional -
+ Volume of events - 100k events/sec
+
+ sla - service level aggrement
+ 1-2 mins dashboard refereshes
+ 6 AM everyday
+
+ PII  -  GDPR
+
+ Spikes - promotion
+ 2x
+ Data Rentition Priod - 3 years day
+
+ HLD - MEdallion Architecture
+
+ Application Layer -> Agent in Serivce -> API ENdpoint -> produce to eventstream -> Kafka/Kinesis
+ AWS MSK - managed streaming on kafka
+
+-> Snowpipe streaming SDK (control group policy on AWS multiple EC2/ EKS)-> Snowflake
+
+
+
+Kafka to Snowflake -
+replication_factor 3
+10 server - 200 partition  1000 partition
+retention period - 7 day
+
+
+15 sec  multiple gbs/sec
+
+100k/sec - 6M events/min -> 360 M/hr -> 10B records/day 10 gb-> 70B max event at any max
+
+70,000,000,000
+1event - 1kb
+
+Max Total Data - 70 TB 70TB/200--- 35 B per partition 35 GB
+
+
+Snowflake
+10 gb * 1000 ->  10 TB
+storage and compute are separate
+
+Snowpipe - RAW tables append only - NOrmal table  clustering on event_date , event_type
+micropartitions - 50 - 500MB partition - immutable
+
+Silver tables - dynamic table - deduping logic , filtering join with dimension tables  10 TB
+event_date , event_type
+PII
+
+row level masking - hide specific user events
+
+column level masking - race dob customer Details
+
+and RBAC
+
+
+Gold -  dynamic table  - Agrregations - Summary tables  - 10 gb
+
+batch - query_cache - underlying data + underlying query same
+
+region, date
+
+raw -silver - gold
+
+1000
+100+
+new micropartition
+
+Dynamic table - check on the source table
+incrementally
+target_lag  1min
+warehouse
+
+
+
+ACCOUNT_USuage
+credits monitor
+
+
+TASKS - QC/DATA validation
+       - Late events
+
+
+
+
+
+Data scientist - silver layer - notebooks exploratory ananlysis
+Data Analysts - Snwoflake StreamLit
+
+
+late events - artificially dashboard low metrics will be fixed once the late events arrive
+
+scehma evolution - variant
+coalsece (event_payload  variant)
+extra column event_version
+
+backfilling - artificially dashboard low metrics
+
+disaster management - task suspend task resume
+spikes - backpressure - kafka - snowpipe cost tradeoff
+vendor lockin - cross region fail over
+Logic fault - fix the logic alter table table_name refresh

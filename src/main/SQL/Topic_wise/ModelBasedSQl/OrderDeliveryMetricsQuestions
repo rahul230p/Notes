@@ -1,0 +1,97 @@
+📊 MODEL 3 — DOORDASH (REVENUE & DELIVERY PERFORMANCE)
+
+orders
+column	type
+order_id	INT
+customer_id	INT
+dasher_id	INT
+restaurant_id	INT
+city_id	INT
+order_created_ts	TIMESTAMP
+order_picked_ts	TIMESTAMP
+order_delivered_ts	TIMESTAMP
+order_status	VARCHAR — ('CREATED','PICKED','DELIVERED','CANCELLED')
+order_amount	DECIMAL
+
+restaurants
+column	type
+restaurant_id	INT
+city_id	INT
+restaurant_name	VARCHAR
+
+cities
+column	type
+city_id	INT
+city_name	VARCHAR
+
+🧠 QUESTIONS (ACTUAL DOORDASH-STYLE)
+
+These are very close to what people report on Medium / Glassdoor.
+
+🟢 Q1 — EASY
+
+For each city, find the total number of delivered orders in the last 30 days.
+
+🟡 Q2 — MEDIUM (YOU FOUND THIS) ⭐
+
+Find the top 3 restaurants by revenue in the last 30 days.
+
+Requirements:
+
+Consider only delivered orders
+
+Revenue = sum(order_amount)
+
+Use last 30 days based on order_delivered_ts
+
+🟡 Q3 — MEDIUM
+
+For each restaurant, calculate:
+
+total delivered orders
+
+total revenue
+for the last 7 days.
+
+🔴 Q4 — HARD (YOU FOUND THIS) ⭐
+
+Calculate the 90th percentile delivery time per city.
+
+Notes:
+
+Delivery time = order_delivered_ts - order_created_ts
+
+Consider only delivered orders
+
+Percentile must be calculated per city
+
+(Hint: MySQL vs Postgres difference matters here.)
+
+🟡 Q5 — MEDIUM
+
+For each city and day, calculate the average delivery time.
+
+🔴 Q6 — HARD
+
+For each restaurant, calculate the day-over-day change in revenue.
+
+🔴 Q7 — HARD
+
+Find restaurants that had orders created but zero delivered orders in the last 14 days.
+
+🔴 Q8 — HARD (WINDOW + RANKING)
+
+For each city, find the restaurant with the highest average order value
+(only consider restaurants with at least 10 delivered orders).
+
+🔴 Q9 — HARD (FUNNEL METRICS)
+
+For each city, calculate:
+
+total orders created
+
+total orders picked
+
+total orders delivered
+
+delivery conversion rate

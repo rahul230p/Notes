@@ -1,0 +1,123 @@
+1️⃣ orders (FACT TABLE)
+
+Grain: 1 row per order
+
+column	type	notes
+order_id	INT	primary key
+customer_id	INT
+dasher_id	INT
+restaurant_id	INT
+city_id	INT
+order_created_ts	TIMESTAMP	order placed time
+order_picked_ts	TIMESTAMP	optional
+order_delivered_ts	TIMESTAMP	optional
+order_status	VARCHAR	CREATED, PICKED, DELIVERED, CANCELLED
+order_amount	DECIMAL	revenue
+
+2️⃣ customers (DIM)
+column	type
+customer_id	INT
+signup_date	DATE
+
+3️⃣ dashers (DIM)
+column	type
+dasher_id	INT
+city_id	INT
+signup_date	DATE
+
+4️⃣ restaurants (DIM)
+column	type
+restaurant_id	INT
+city_id	INT
+restaurant_name	VARCHAR
+
+5️⃣ cities (DIM)
+column	type
+city_id	INT
+city_name	VARCHAR
+
+🧠 PRACTICE QUESTIONS (INTERVIEW STYLE)
+🟢 EASY (Warm-up)
+Q1
+
+For each city, find the total number of delivered orders.
+
+Q2
+
+For each day, find:
+
+number of orders created
+
+number of orders delivered
+
+Q3
+
+For each restaurant, find the total revenue from delivered orders.
+
+🟡 MEDIUM (Most common)
+Q4
+
+Find the top 3 restaurants by revenue in the last 30 days.
+
+Q5
+
+For each dasher, find the total number of delivered orders.
+
+Q6
+
+For each city and day, calculate the average delivery time
+(order_delivered_ts - order_created_ts) for delivered orders.
+
+Q7
+
+Find dashers who delivered more than 5 orders in a single day.
+
+🔴 HARD (Window + Analytics)
+Q8 ⭐
+
+For each city and day, calculate the day-over-day change in delivered orders.
+
+Q9 ⭐
+
+For each dasher, calculate a 7-day rolling count of delivered orders
+(MySQL compatible).
+
+Q10 ⭐
+
+Find restaurants that had orders created but zero delivered orders in the last 14 days.
+
+🔴 HARD (Business / Funnel)
+Q11 ⭐
+
+For each city, calculate:
+
+total orders created
+
+total orders picked
+
+total orders delivered
+
+delivery rate (% delivered / created)
+
+Q12 ⭐
+
+For each city, find the top dasher based on
+average deliveries per active day.
+
+🔴 VERY HARD (Real Interview Favorites)
+Q13 ⭐⭐⭐
+
+Calculate the 90th percentile delivery time per city
+(MySQL – no percentile function).
+
+Q14 ⭐⭐⭐
+
+For each restaurant, calculate the day-over-day revenue change.
+
+
+For each dasher and day, calculate the 7-day rolling average of the number of delivered orders.
+
+
+For each city, find the top 3 restaurants by total delivered order revenue in the last 30 days.
+
+For each city and day, calculate the day-over-day change in the number of delivered orders.

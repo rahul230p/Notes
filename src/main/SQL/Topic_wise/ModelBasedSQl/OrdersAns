@@ -1,0 +1,144 @@
+select city_id, count(distinct order_id) as total_orders_per_city
+from orders
+where order_status = 'Completed'
+group by city_id
+having count(distinct order_id) > 0
+
+
+select order_date,
+count(distinct case when order_status = 'Completed' then order_id end)
+ as total_completed_order,
+count(distinct case when order_status = 'Cancelled' then order_id end)
+ as total_completed_order
+from orders
+group by order_date
+
+with cte as (
+select o.city_id, o.restaurant_id, r.restaurant_name ,
+count(distinct o.order_id) as total_orders_per_restaurant_and_city
+from orders o join restaurant r on o.restaurant_id = r.restaurant_id
+where o.order_status = 'Completed'
+group by o.city_id, o.restaurant_id
+),
+ranking as (
+select city_id ,restaurant_name, row_number() over (partition by city_id order by
+total_orders_per_restaurant_and_city desc) as rnk
+from cte
+),
+select city_id , restaurant_name from ranking
+where rnk<=2
+
+
+with completed_orders as (
+  select
+    city_id,
+    order_date,
+    count(*) as completed_orders
+  from orders
+  where order_status = 'Completed'
+  group by city_id, order_date
+)
+select
+  city_id,
+  order_date,
+  completed_orders -
+    lag(completed_orders) over (
+      partition by city_id
+      order by order_date
+    ) as day_over_day_change
+from completed_orders
+order by city_id, order_date;
+
+
+with completed_orders as (
+  select
+    restaurant_id,
+    order_date,
+    count(*) as completed_orders
+  from orders
+  where order_status = 'Completed'
+  group by restaurant_id, order_date
+)
+select restaurant_id, order_date, sum(completed_orders) over
+(partition by restaurant_id order by order_date rows between
+6 preceding and current row)as rolling_sum
+from completed_order
+
+with cnts as (
+select customer_id,
+count(*) as total_completed_orders,
+sum(order_amount) as total_order_amount
+from orders
+where order_status = 'Completed'
+group by customer_id
+)
+select customer_id, total_completed_orders,total_order_amount from cnts
+where total_completed_orders > 3
+
+with cnts as (
+  select
+    city_id,
+    sum(case when order_status = 'Completed' then 1 else 0 end) as completed_orders,
+    count(*) as total_orders
+  from orders
+  group by city_id
+)
+select
+  city_id,
+  round(100.0 * completed_orders / nullif(total_orders, 0), 2) as percentage_completion
+from cnts;
+
+with cte as (
+  select
+    order_date,
+    'Completed' as status,
+    count(*) as order_cnt
+  from orders
+  where order_status = 'Completed'
+  group by order_date
+
+  union all
+
+  select
+    order_date,
+    'Cancelled' as status,
+    count(*) as order_cnt
+  from orders
+  where order_status = 'Cancelled'
+  group by order_date
+)
+select
+  order_date,
+  status,
+  order_cnt
+from cte
+order by order_date, status;
+
+
+select r.restaurant_id
+from restaurants r left join orders o
+on r.restaurant_id = o.restaurant_id
+and o.order_status = 'Completed'
+and o.order_date >= current_date - Interval 30 Day
+where o.restaurant_id is null and
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

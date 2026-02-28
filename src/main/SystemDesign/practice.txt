@@ -1,0 +1,43 @@
+Clearifying
+
+Function requirent
+
+Who are constructing this design for / Who are the end customers for this design
+Data analyst Data Scientist Business executives
+data ananlyst business executive - summary metrics gold layer
+data scientist - filtered data silver layer
+
+What is the data processing - batch or realtime
+Both
+
+What sort of kpis are we trying to derive from this design
+Batch - daily - DAU , funnel conversion , Retention , Average Order value for previous day
+Realtime - delivery time , order cancellations
+
+Data sources for this system - application events
+
+
+Non functional functional
+
+Events/sec - 100k   - scalable latency data processing capacity
+SLa - Service level Aggrement - 5min refresh dashboard - realtime daily 6am - batch
+Spikes - Specific times - Autoscaling
+Data retention time -  3 years
+PII Data - Are we going to have pii data - name adreess phoen no email dob
+
+
+
+APplication events -> producer -> kafka -> snowpipe -> raw tables
+                                   msk        ------------snowflake--------------------------------
+
+partition - 200
+replication factor - topic level -
+cluster (group of brokers)-> topics -> partitions
+
+
+Snowpipe
+poll very 1 sec -> kafka topic ->
+
+
+
+

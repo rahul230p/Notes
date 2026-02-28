@@ -1,0 +1,42 @@
+select score, dense_rank() over (order by score desc) as rank
+from Scores
+
+select t.name , t.emp_salary as Employee, t.salary from
+(select d.name, e.name as emp_salary, e.salary, rank() over (partition by department order by salary desc) as rnk
+from Employee e join Department d on e.departmentId = d.id
+)t
+where t.rnk =1
+
+
+select t.name, t.emp_name , t.salary from
+(select d.name, e.name as emp_name, e.salary,
+rank() over (partition by d.id order by salary desc) as rnk
+from Employee e join Department d on e.departmentId = d.id
+)t
+where rnk<=3
+
+select date, revenue,
+lag(revenue) over (order by date ) as prev_revenue,
+revenue - lag(revenue) over (order by date )  as change,
+from DailyRevenue
+
+select order_date,
+avg(orders) over (order by order_date rows between 6 preceding and current row)
+from Orders
+group by order_date
+
+select user_id, activity_date,
+lag(activity_date) over (partition by user_id order by activity_date) as prev_date,
+case when datediff(activity_date,lag(activity_date)
+ over (partition by user_id order by activity_date)) > 1 then 1 else 0 end as gap_flag
+from UserActivity
+
+
+
+
+
+
+
+
+
+

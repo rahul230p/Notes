@@ -1,0 +1,21 @@
+select emp_id, event_day, sum(out_time-in_time) as total_time
+from Employees
+group by emp_id, event_day
+order by sum(out_time-in_time) desc
+
+
+select date_id, make_name, count(distinct lead_id) as unique_leads,
+ count(distinct partner_id) as unique_partners
+from DailySales
+group by date_id, make_name
+
+select class
+from Courses
+group by class
+having count(*) >= 5
+
+
+select product_id , round(sum(o.price * u.unit)/sum(u.unit), 2) as average_price
+from Prices p join UnitsSold u on p.product_id = u.product_id
+and o.purchase_date between p.start_date and p.end_date
+group by product_id

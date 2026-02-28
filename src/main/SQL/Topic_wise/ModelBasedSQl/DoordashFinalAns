@@ -1,0 +1,139 @@
+select
+  o.city_id,
+  c.city_name,
+  count(*) as delivered_orders
+from orders o
+join city c
+  on o.city_id = c.city_id
+where o.order_status = 'DELIVERED'
+group by
+  o.city_id,
+  c.city_name;
+
+
+select date(order_delivered_ts) as dates,
+sum(case when order_status = 'CREATED' then 1 else 0 end) as created_orders
+sum(case when order_status = 'DELIVERED' then 1 else 0 end) as delivered_orders
+from orders
+group by date(order_delivered_ts)
+order by dates
+
+select restaurant_id ,
+sum(order_amount) as total_revenue
+from orders
+where order_status = 'DELIVERED'
+group by restaurant_id
+
+with total_revenue as (
+select restaurant_id ,
+sum(order_amount) as total_revenue
+from orders
+where order_status = 'DELIVERED' and
+date(order_delivered_ts) >= Current_Date - interval 30 day
+group by restaurant_id
+),
+ranking as (
+select restaurant_id, row_number() over (order by total_revenue desc)
+ as rnk from total_revenue)
+select restaurant_id from ranking where rnk <=3
+
+select dasher_id ,
+count(*) as delivered_orders
+from orders
+where order_status = 'DELIVERED'
+group by dasher_id
+
+select city_id, date(order_delivered_ts) as order_dt,
+avg(order_delivered_ts - order_created_ts) as avg_delivery_time
+from orders
+where order_status = 'DELIVERED'
+group by city_id, date(order_delivered_ts)
+
+select dasher_id, date(order_delivered_ts) as order_dt,
+count(*) as delivered_orders
+from orders
+group by dasher_id, date(order_delivered_ts)
+having count(*) > 5
+
+with order_delivery as (
+  select
+    dasher_id,
+    date(order_delivered_ts) as order_date,
+    count(*) as delivered_order_cnt
+  from orders
+  where order_status = 'DELIVERED'
+  group by dasher_id, date(order_delivered_ts)
+)
+select
+  dasher_id,
+  order_date,
+  avg(delivered_order_cnt) over (
+    partition by dasher_id
+    order by order_date
+    rows between 6 preceding and current row
+  ) as rolling_avg_deliveries
+from order_delivery
+order by dasher_id, order_date;
+
+with revenuecte as (
+  select
+    city_id,
+    restaurant_id,
+    sum(order_amount) as revenue
+  from orders
+  where order_status = 'DELIVERED'
+    and date(order_delivered_ts) >= current_date - interval 30 day
+  group by city_id, restaurant_id
+),
+ranking as (
+  select
+    city_id,
+    restaurant_id,
+    revenue,
+    row_number() over (
+      partition by city_id
+      order by revenue desc
+    ) as rnk
+  from revenuecte
+)
+select
+  city_id,
+  restaurant_id,
+  revenue,
+  rnk
+from ranking
+where rnk <= 3
+order by city_id, rnk;
+
+
+with orders_delivery as (
+  select
+    city_id,
+    date(order_delivered_ts) as order_date,
+    count(*) as delivered_orders
+  from orders
+  where order_status = 'DELIVERED'
+  group by city_id, date(order_delivered_ts)
+)
+select
+  city_id,
+  order_date,
+  delivered_orders,
+  delivered_orders -
+    lag(delivered_orders) over (
+      partition by city_id
+      order by order_date
+    ) as day_over_day_change
+from orders_delivery
+order by city_id, order_date;
+
+
+
+
+
+
+
+
+
+
+
