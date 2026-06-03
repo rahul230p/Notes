@@ -1,0 +1,126 @@
+Q1. Highest Salary Per Department
+Employee
+employee_id	department	salary
+1	IT	100
+2	IT	200
+3	IT	150
+4	HR	120
+5	HR	180
+6	HR	180
+Expected Output
+employee_id	department	salary
+2	IT	200
+5	HR	180
+6	HR	180
+Q2. Top 2 Products Per Category
+Product_Sales
+product_id	category	sales
+P1	A	100
+P2	A	90
+P3	A	80
+P4	B	120
+P5	B	110
+P6	B	70
+Expected Output
+product_id	category	sales
+P1	A	100
+P2	A	90
+P4	B	120
+P5	B	110
+Q3. Deduplicate Latest Customer Record
+Customer
+customer_id	name	updated_ts
+1	Rahul	2024-01-01
+1	Rahul Kumar	2024-03-01
+2	Amit	2024-02-01
+Expected Output
+customer_id	name	updated_ts
+1	Rahul Kumar	2024-03-01
+2	Amit	2024-02-01
+Q4. Running Total
+Transactions
+customer_id	txn_date	amount
+1	2024-01-01	100
+1	2024-01-02	50
+1	2024-01-03	75
+Expected Output
+customer_id	txn_date	amount	running_total
+1	2024-01-01	100	100
+1	2024-01-02	50	150
+1	2024-01-03	75	225
+Q5. Previous Transaction Amount
+Transactions
+customer_id	txn_date	amount
+1	2024-01-01	100
+1	2024-01-03	50
+1	2024-01-05	80
+Expected Output
+customer_id	txn_date	amount	prev_amount
+1	2024-01-01	100	NULL
+1	2024-01-03	50	100
+1	2024-01-05	80	50
+Q6. Day-1 Retention
+Activity
+user_id	activity_date
+1	2024-01-01
+1	2024-01-02
+1	2024-01-05
+2	2024-01-01
+2	2024-01-04
+Expected Output
+retained_users
+1
+Q7. Customers Without Orders
+Customers
+customer_id	name
+1	Rahul
+2	Amit
+3	Neha
+Orders
+order_id	customer_id
+101	1
+102	2
+Expected Output
+customer_id	name
+3	Neha
+Q8. Consecutive Login Days
+Logins
+user_id	login_date
+1	2024-01-01
+1	2024-01-02
+1	2024-01-03
+2	2024-01-01
+2	2024-01-03
+Expected Output
+user_id
+1
+Q9. Sessionization
+
+New session starts if inactivity > 30 minutes.
+
+Events
+user_id	event_time
+1	10:00
+1	10:10
+1	10:20
+1	11:15
+1	11:20
+Expected Output
+user_id	event_time	session_id
+1	10:00	1
+1	10:10	1
+1	10:20	1
+1	11:15	2
+1	11:20	2
+Q10. Funnel Analysis
+Events
+user_id	event
+1	View_Product
+1	Add_To_Cart
+1	Purchase
+2	View_Product
+2	Add_To_Cart
+3	View_Product
+Expected Output
+viewed	carted	purchased
+3	2	1

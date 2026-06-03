@@ -1,0 +1,245 @@
+Tier 1 (Must Do)
+1. Two Sum
+Array(2,7,11,15)target = 9
+Concept:
+
+
+HashMap
+
+
+Difficulty:
+
+
+Easy
+
+
+
+2. Common Elements Between Two Lists
+Like the Reddit question:
+List((1,"a"),(2,"b"))List((2,"x"),(3,"y"))
+Concept:
+
+
+HashMap
+
+
+Hash Join
+
+
+
+3. Group Anagrams
+List("eat","tea","ate","tan")
+Concept:
+
+
+Map
+
+
+Sorting
+
+
+
+4. Top K Frequent Elements
+Array(1,1,1,2,2,3)k = 2
+Concept:
+
+
+Frequency map
+
+
+Heap
+
+
+Very common Amazon.
+
+5. Find Duplicates
+Array(1,2,3,2,4,1)
+Concept:
+
+
+Set
+
+
+
+Tier 2 (Very Likely)
+6. Longest Substring Without Repeating Characters
+"abcabcbb"
+Concept:
+
+
+Sliding Window
+
+
+Amazon favorite.
+
+7. First Non-Repeating Character
+"aabbccd"
+Output:
+'d'
+Concept:
+
+
+Frequency map
+
+
+
+8. Longest Consecutive Sequence
+Array(100,4,200,1,3,2)
+Output:
+4
+Concept:
+
+
+HashSet
+
+
+
+9. Subarray Sum Equals K
+Array(1,1,1)k = 2
+Concept:
+
+
+Prefix Sum
+
+
+HashMap
+
+
+
+10. Product of Array Except Self
+Array(1,2,3,4)
+Output:
+Array(24,12,8,6)
+
+Tier 3 (Often Asked)
+11. Merge Intervals
+[[1,3],[2,6],[8,10]]
+Concept:
+
+
+Sorting
+
+
+
+12. Meeting Rooms
+[(0,30),(5,10),(15,20)]
+Can attend all?
+Concept:
+
+
+Interval overlap
+
+
+
+13. Sliding Window Maximum
+Concept:
+
+
+Deque
+
+
+
+14. K Largest Elements
+Concept:
+
+
+Min Heap
+
+
+
+15. Sort Characters By Frequency
+"tree"
+Output:
+"eetr"
+or
+"eert"
+
+Tier 4 (Less Frequent but Worth Knowing)
+16. Valid Anagram
+"listen""silent"
+
+17. Intersection of Two Arrays
+Array(1,2,2,1)Array(2,2)
+Output:
+Array(2)
+
+18. Move Zeroes
+Array(0,1,0,3,12)
+Output:
+Array(1,3,12,0,0)
+
+19. Missing Number
+Array(3,0,1)
+Output:
+2
+
+20. Contains Duplicate
+Array(1,2,3,1)
+Output:
+true
+
+If You Only Have 1 Day
+Do these 10 first:
+
+
+Two Sum
+
+
+Common Keys Between Lists
+
+
+Top K Frequent Elements
+
+
+Group Anagrams
+
+
+Longest Substring Without Repeating Characters
+
+
+First Non-Repeating Character
+
+
+Longest Consecutive Sequence
+
+
+Subarray Sum Equals K
+
+
+Merge Intervals
+
+
+K Largest Elements
+
+
+
+Amazon DE2 Coding Pattern
+The interviewer is often looking for:
+Step 1
+Can you solve it?
+Step 2
+Can you optimize?
+Example:
+Brute Force -> O(n²)HashMap -> O(n)
+Step 3
+Can you discuss edge cases?
+Example:
+
+
+Empty input
+
+
+Null input
+
+
+Duplicates
+
+
+Very large input
+
+
+Step 4
+Can you explain complexity?
+Always finish with:
+Time Complexity = O(...)Space Complexity = O(...)
+For your Amazon DE2 interview, I would spend 70% of coding prep on HashMap + Sliding Window + Frequency counting problems, because that is where most DE coding rounds tend to live.

@@ -1,0 +1,379 @@
+For Amazon DE2, these are the SQL syntaxes you should know by heart.
+
+# 1. ROW_NUMBER()
+
+Used for:
+
+* Deduplication
+* First record
+* Latest record
+
+```sql
+SELECT *,
+       ROW_NUMBER() OVER(
+           PARTITION BY customer_id
+           ORDER BY updated_ts DESC
+       ) AS rn
+FROM customer;
+```
+
+---
+
+# 2. RANK()
+
+Used when ties should share rank.
+
+```sql
+SELECT *,
+       RANK() OVER(
+           PARTITION BY department
+           ORDER BY salary DESC
+       ) AS rnk
+FROM employee;
+```
+
+Example:
+
+```text
+200 -> 1
+200 -> 1
+150 -> 3
+```
+
+---
+
+# 3. DENSE_RANK()
+
+Used for Top N Per Group.
+
+```sql
+SELECT *,
+       DENSE_RANK() OVER(
+           PARTITION BY department
+           ORDER BY salary DESC
+       ) AS rnk
+FROM employee;
+```
+
+Example:
+
+```text
+200 -> 1
+200 -> 1
+150 -> 2
+```
+
+---
+
+# 4. LAG()
+
+Previous row.
+
+```sql
+SELECT *,
+       LAG(amount) OVER(
+           PARTITION BY customer_id
+           ORDER BY txn_date
+       ) AS prev_amount
+FROM transactions;
+```
+
+---
+
+# 5. LEAD()
+
+Next row.
+
+```sql
+SELECT *,
+       LEAD(amount) OVER(
+           PARTITION BY customer_id
+           ORDER BY txn_date
+       ) AS next_amount
+FROM transactions;
+```
+
+---
+
+# 6. Running Total
+
+```sql
+SELECT *,
+       SUM(amount) OVER(
+           PARTITION BY customer_id
+           ORDER BY txn_date
+       ) AS running_total
+FROM transactions;
+```
+
+---
+
+# 7. Moving Average
+
+```sql
+SELECT *,
+       AVG(amount) OVER(
+           ORDER BY txn_date
+           ROWS BETWEEN 6 PRECEDING
+           AND CURRENT ROW
+       ) AS moving_avg
+FROM sales;
+```
+
+---
+
+# 8. Top N Per Group
+
+```sql
+WITH cte AS (
+    SELECT *,
+           DENSE_RANK() OVER(
+               PARTITION BY category
+               ORDER BY sales DESC
+           ) rnk
+    FROM product_sales
+)
+SELECT *
+FROM cte
+WHERE rnk <= 3;
+```
+
+---
+
+# 9. Dedup Latest Record
+
+```sql
+WITH cte AS (
+    SELECT *,
+           ROW_NUMBER() OVER(
+               PARTITION BY customer_id
+               ORDER BY updated_ts DESC
+           ) rn
+    FROM customer
+)
+SELECT *
+FROM cte
+WHERE rn = 1;
+```
+
+---
+
+# 10. Customers Without Orders
+
+```sql
+SELECT c.*
+FROM customers c
+LEFT JOIN orders o
+  ON c.customer_id = o.customer_id
+WHERE o.customer_id IS NULL;
+```
+
+Alternative:
+
+```sql
+SELECT *
+FROM customers c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM orders o
+    WHERE o.customer_id = c.customer_id
+);
+```
+
+---
+
+# 11. Day-1 Retention
+
+```sql
+SELECT COUNT(DISTINCT a.user_id)
+FROM activity a
+JOIN activity b
+  ON a.user_id = b.user_id
+ AND b.activity_date =
+     DATE_ADD(a.activity_date, INTERVAL 1 DAY);
+```
+
+---
+
+# 12. Sessionization
+
+### Previous Event
+
+```sql
+LAG(event_time) OVER(
+    PARTITION BY user_id
+    ORDER BY event_time
+)
+```
+
+### New Session Flag
+
+```sql
+CASE
+    WHEN prev_time IS NULL
+      OR TIMESTAMPDIFF(
+             MINUTE,
+             prev_time,
+             event_time
+         ) > 30
+    THEN 1
+    ELSE 0
+END
+```
+
+### Session Id
+
+```sql
+SUM(session_start) OVER(
+    PARTITION BY user_id
+    ORDER BY event_time
+)
+```
+
+---
+
+# 13. Conditional Aggregation
+
+```sql
+SELECT
+    COUNT(
+        CASE
+            WHEN status='Purchase'
+            THEN 1
+        END
+    ) purchases
+FROM events;
+```
+
+or
+
+```sql
+SELECT
+    SUM(
+        CASE
+            WHEN status='Purchase'
+            THEN 1
+            ELSE 0
+        END
+    ) purchases
+FROM events;
+```
+
+---
+
+# 14. Monthly Revenue
+
+```sql
+SELECT
+    DATE_FORMAT(order_date,'%Y-%m') month,
+    SUM(amount) revenue
+FROM orders
+GROUP BY DATE_FORMAT(order_date,'%Y-%m');
+```
+
+---
+
+# 15. CTE Syntax
+
+```sql
+WITH cte AS (
+    SELECT *
+    FROM table_name
+)
+SELECT *
+FROM cte;
+```
+
+---
+
+# 16. Multiple CTEs
+
+```sql
+WITH cte1 AS (
+    SELECT ...
+),
+cte2 AS (
+    SELECT ...
+    FROM cte1
+)
+SELECT *
+FROM cte2;
+```
+
+---
+
+# 17. Gap & Island Pattern
+
+```sql
+SELECT *,
+       ROW_NUMBER() OVER(
+           PARTITION BY user_id
+           ORDER BY login_date
+       ) rn
+FROM logins;
+```
+
+Then:
+
+```sql
+DATE_SUB(
+    login_date,
+    INTERVAL rn DAY
+)
+```
+
+Used for:
+
+* Consecutive days
+* Login streaks
+
+---
+
+# 18. Common DATE Functions
+
+Add Day
+
+```sql
+DATE_ADD(date_col, INTERVAL 1 DAY)
+```
+
+Subtract Day
+
+```sql
+DATE_SUB(date_col, INTERVAL 1 DAY)
+```
+
+Difference
+
+```sql
+DATEDIFF(date1, date2)
+```
+
+Timestamp Difference
+
+```sql
+TIMESTAMPDIFF(
+    MINUTE,
+    start_time,
+    end_time
+)
+```
+
+---
+
+### Night Before Interview Memorization List
+
+Know these 8 from memory:
+
+```sql
+ROW_NUMBER()
+RANK()
+DENSE_RANK()
+LAG()
+LEAD()
+SUM() OVER()
+LEFT JOIN ... IS NULL
+DATE_ADD()
+```
+
+If an Amazon DE2 interviewer asks SQL, there's a very high chance the solution will involve one or more of these patterns.

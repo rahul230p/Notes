@@ -1,0 +1,248 @@
+Collated Question List
+1.	How garbage collection happens in spark ?
+2.	Suppose, i am getting a version error that resources already present were created with different terraform version while doing a terraform apply. How will you resolve this?
+3.	what is checkpointing in spark streaming? How many types of checkpointing available?
+4.	What is the bigquery caching mechanism?
+5.	What is the difference between pub-sub synchronous and asynchronous pulling flows?
+6.	How do you keep track of your progress when working on projects?
+7.	Why is RDD immutable?
+8.	Could you please compare spark streaming with other streaming engines?
+9.	What is the kappa architecture?
+10.	What was your biggest issue within big data domain?
+11.	You got verbal agreement for a feature on the call with your customer but on the sprint review customer said that they wanted to have something different. How you can solve the conflict between you and the customer?
+12.	What is the proper parquet file size?
+13.	What will happen for Large, small many ?
+14.	In Spark dataframe when writing to parquet file location instead of overwriting the whole file is it possible to overwrite a particular partition?
+15.	how will you handle pii data shown to only specific users?
+16.	What will you do if customer not reply you on time when you query some info, because customer may forget/ignore it?
+17.	What limitations you see in Dataflow's autoscaling approach
+18.	How will you handle late coming data in Dataflow?
+19.	How will you handle alerts for job failures in GCP?
+20.	what CI/CD Quality gate checks you will perform?
+21.	How do you do estimation of your tasks? what approach do you use?
+22.	What are the ETL patterns you were using on you project and why?
+23.	Describe Airflow executors, you were using on your project, k8s vs Celery executor
+24.	Describe Spark Framework you mentioned in your deck, what are the main capabilities of it? Why you call it a framework?
+25.	How will you propose to tackle AWS S3 consistency problem?
+26.	What are key differences between OLAP and OLTP Engines?
+
+27.	Can you explain what steps and methods you have taken in terms of designing and documenting the architecture for an application?
+28.	What steps or actions you will take when your spark job is running from a very long time?
+29.	How to minimise the cost for storing objects in S3?
+30.	How star schema is different from snowflake schema?
+31.	Explain CDC and its advantages in SQL?
+32.	Can you explain docker container’s possible states and what they mean?
+33.	How AWS Athena is different from AWS Glue and in which scenarios you will use these?
+34.	How we can query any data source with AWS Athena?
+35.	You have a highly skilled team member who wants to leave the project. As a team lead what steps would you take in order to retain him in the project?
+
+36.	What is data provenance and data lineage?
+37.	Do you see any differences between these two terms?
+38.	Why do we need to put efforts into data governance when building up data pipelines?
+39.	What would you recommend - storing data lineage metadata along with business data or storing them separately and why?
+40.	How do you check data quality on your current project?
+41.	How do you maintain the current DQ solution when something changes from business perspective (schema updates, new data source, pipeline logic to be updated)?
+42.	What are differences between data quality and data governance?
+43.	What are the key differences between classical Data lake and Delta lake?
+44.	Please come up with some use case when Delta lake would be a good choice and when classical data lake would be more preferable?
+45.	How would you identify Data mesh architecture?
+46.	What value may it bring in comparison with classical data lakes?
+47.	What deployment strategies do you know?
+48.	Which one have you been using in your current project?
+
+49.	Let’s imagine some big milestone for your project is coming and you are preparing for the great demo. At some point you start realising some of external components your product depends on are completely broken? What actions would you take to make your demo a success?
+50.	How would you measure performance of your Spark job?
+51.	What metrics would you be focused on?
+52.	What tools/approaches/APIs would you use for measurement?
+53.	Your team have been catching up with original deadlines and working over weekends for a couple of months already. Team members are exhausted and kind of demotivated. How would you as a team leader convince them to work some extra hours over the next weekend?
+54.	Your data pipeline actively talks to Hive during its execution and your high level analysis has identified Hive as a bottleneck from performance perspective. What would be your actions to try to achieve performance improvement?
+
+55.	When Spark might not to be a good choice for data processing?
+56.	What alternatives could you propose for such cases?
+57.	How does good PoC phase run look like based on your past experience?
+58.	What is the difference between PoC and prototyping? MVP?
+59.	What are input data required and what output would you define as part of DoD?
+60.	In one of your previous project you’ve rewritten Hive application on Spark. What was difference between spark app and running Hive on Spark?
+61.	What optimizations have you used?
+
+62.	I would like to set up daily ingestion process on AWS that loads data from some external database and saves to S3. Overall job takes ~ 1 hour, total daily data size is about 1 Gb. What tools would you recommend to do that cost-efficiently?
+
+63.	Customer added a new task that require work with some framework/technologies that you and your team had no experience with. But estimations and expectations on implementation speed are same as usual. How would you react to it?
+64.	What is your opinion about overtimes in case team misses Sprint deadlines?
+65.	When would you ask your team for such measure?
+66.	What would you do if team is not ready even for small overwork during a day?
+67.	You are taking over a role of a team leader within a solid, matured team. You are fairly new to the domain and team members apparently have more expertise specific to work items being performed by the squad. What would be your steps to gain a reputation within the team and put the team under control?
+68.	What is data lineage?
+69.	How may it come in handy?
+70.	How would you capture data lineage metadata?
+71.	Would you segregate it from business data or store everything together?
+72.	How can we apply CAP theorem to ETL processing/whole data solution?
+73.	What challenges are present from your perspective in case we provide eventually consistent data mart?
+74.	Assuming you are loading a daily dataset of a highly nested json files that are later flattened through the transformation process in AWS Glue. Due to unpredictable failures - multiple days were missed through processing and nested transformation involves multi-level flattening - which results in failure during processing phase due to OOM. How would you fix the issue at hand?
+75.	What will you change to avoid same problem?
+76.	As a team leader - what will do you with a new team member whose technical performance is seemingly up to the mark, but one who lacks initiative currently needed on project?
+77.	What cost tracking metrics can you propose to evaluate efficiency/value of the solution you build and monitor expenses overtime? For example based on AWS/Cloud-provider or other vendorised solutions?
+78.	Which AWS services you can suggest to replace Snowflake from your access layer (project logical architecture schema)?
+79.	What data formats did you use in Landing/RAW/Unification layers? Why did you choose them?
+80.	Explain parquet vs csv
+81.	Explain delta vs parquet
+82.	How can we run Spark Jobs in AWS environment? Advantages and disadvantages of each approach.
+83.	You joined a new team. They said that the ETL pipeline (Spark) which was created 1 year ago is working slowly now. How are you going to investigate and fix the possible issues?
+84.	Explain z order
+85.	You joined a new team. They gave you a new laptop and provided access to Github repos. Also, they asked you to download projects to your laptop and run unit tests. This team uses 2 projects in 2 different repositories.
+ 1st project uses python 3.10 and pandas 2.0.0.
+ 2nd project uses python 3.11 and pandas 2.2.0.
+ Can you describe your next steps?
+86.	You have to choose between 2 AWS technologies and persuade your customer that your choice is correct. Your steps?
+87.	You PM called you via teams on Friday evening and asked to work tomorrow to be able to meet project deadlines. What are you going to do?
+88.	Your BA asked you to fix minor bug and deploy it to production without QA phase as soon as possible. What are your actions?
+89.	Can you compare Hadoop HDFS and AWS S3?
+90.	What are the main differences and similarities between the two?
+91.	How would you decide which storage to use for the new project?
+92.	Your Spark application has failed with some undescriptive error (Executor failed, Remote RPC client disconnected etc.). How would you approach debugging and fixing this issue?
+93.	What would you choose: traditional Spark or Spark on Databricks?
+94.	What are the main differences which affect your decision?
+95.	Suppose you need to read a large CSV file in PySpark, but you're encountering out-of-memory errors. How would you resolve this issue?
+
+96.	Let’s imagine that you have been assigned as a mentor for the newcomer on the project (L1, L2). How would you approach such assignment?
+97.	Describe previous experience with similar tasks, what issues have occurred and how have you resolved those issues
+98.	How would you approach estimating a task where a new technology is used and no one in the team has no experience with.
+99.	Could you please tell me what estimation techniques you have personally used on the projects and what other techniques do you know?
+100.	A task that appears to be more complex than it was thought and taking more time than previously estimated. What would you do in such case?
+101.	Let’s imagine that you are assigned as a team lead on a project. You have noticed that one of your colleagues is constantly underperforming for some time, taking too much time to do simple tasks. How would you approach providing your feedback and finding the reason of that?
+
+1. Please provide a use case where you would suggest using Parquet instead of Delta format?
+2. How would you investigate an SQL query performance problem? Can you provide a real, successful project scenario in which you performed SQL query performance optimization, from investigation to implementation?
+3. Can you compare the difference between dense rank, rank, and row number?
+4. Can you explain what Decorator is in Python? How does Python execute decorator internally? Can you explain what nested decorator is? Please suggest use cases and scenarios when to apply decorator?
+5. Imagine you have a CI/CD pipeline that requires building a Docker image, and the pipeline is long-running. What options do you have to optimize it? what is Multistage docker
+6. Can you suggest what action you would take to avoid underestimating a story? And share any successful project experience in avoiding under-estimation.
+7. Imagined in a situation that just few days before the sprint end, client has raised a requirement change and state that the sprint cannot be closed without this requirement. How would you handle such scenario?
+8. Imagine there is a junior team member in the team that requires feedback about his work quality, what approach would you use to feedback to him?
+
+9. What are the key features of spark’s AQE. Your job has 200 shuffle partitions but very little data. How does AQE optimize this. When will Spark switch to broadcast join automatically
+10. How does Unity Catalog differ from traditional Hive metastore in Databricks. Can a Unity Catalog metastore be shared across multiple workspaces. Can Hive Metastore and Unity Catalog coexist in Databricks
+11. Could you compare the orchestration mechanism in Databricks and Azure Data Factory
+12. What is predicate pushdown. Why might it not work in certain file formats like CSV or custom data sources. If a dataset is partitioned by country, do we still need predicate pushdown
+13. What is the role of caching in Spark jobs
+14. What types of Slowly Changing Dimensions (SCD) do you know. How would you implement SCD Type 2 in Spark for billions of records. How do you handle multiple updates for the same record in one batch. How would you implement SCD Type 2 with streaming pipelines
+15. What is the difference between list, tuple, and set. When would you use a tuple in data pipelines
+16. Can you suggest what code quality practice you will apply to your project
+17. Let's assume you need to perform a proof of concept (PoC) for a technology you're unfamiliar with, leading to low confidence in providing accurate estimations. Which Agile practices would you use to incorporate this activity into a sprint
+18. Let's assume you have a hard deadline to finish a task and push to production. After several rounds of testing, you pushed the change but by mistake your change broke something in production, now all eyes are on you. How will you address these situations and what your action plan will be?
+
+How do you solve java heap space issue in spark  and Out of memory issues in spark.
+How do you ensure that your spark job runs optimally in terms of memory and CPU usage
+You need to build a real-time data pipeline to process events from a streaming source (e.g., Kafka) and store the results in a Delta Lake table. What are the key components and considerations?
+what is the diff between streaming live tables and incremental tables in DLT
+
+What is the Global Interpreter Lock (GIL) in Python, and how does it affect threading? Can you tell us few scenarios where this GIL can be used
+How do you explain complex technical concepts to non-technical stakeholders?
+How do you prevent unrealistic sprint commitments. What do you do if the team commits to too much work in a sprint?
+What is horizontal and vertical scaling in Spark?
+What are dimensions of Data Quality?
+What can be cause of bad data?
+How do you estimate your tasks?
+What Databricks Delta Lake Optimizations do you know?
+What SCD Types do you know?
+What is the difference between Python multithreading and multiprocessing? What are performance considerations, if any?
+How would you install a culture of ownership in a data engineering team, ensuring engineers feel responsible for the end-to-end reliability of their pipelines?
+How would you handle a situation where two senior engineers in your team have fundamentally different technical opinions on a critical architecture decision?
+ How would you approach a situation where a client insists on a technical solution that you believe is inappropriate for their actual business needs?
+
+DSE: A2 -> A3
+What are some of the best Spark job performance improvement techniques in terms of Spark configs and cluster configs?
+Can you explain the difference between storing data in delta lake and storing it in parquet files? What are the advantages of delta tables?
+Can you describe what options we have in AWS to run spark workloads? Which one do you choose?
+What are different orchestration tools that you have used, and which is best for the ETL pipelines/ data pipelines? Explain airflow?
+As a team lead, what would you do if one of your teammates kept giving the same updates during the daily standups (something like “I am still working on it”)?
+You are in the middle of a sprint and suddenly the product owner comes up with a new requirement. What will you do?
+When should you use Apache Spark, and when should you use Apache Flink? What are the main differences between them? Please compare these technologies
+What does CAP theorem state?  Where is Cassandra in the CAP theorem?
+What are the benefits of cloud computing over on-prem servers?
+How do you ensure high quality data is produced by your data pipeline?
+How would you organize effective work with a customer in a -10h time zone?
+On your project, the architect doesn't accept any of your proposed solutions with no meaningful arguments. How would you try to resolve this issue?
+What built-in optimization mechanisms does Spark have?
+Compare Cloud Service Models (IaaS, PaaS, SaaS) and give examples from cloud services you worked with AWS
+In what cases would you prefer to use a cluster with a large number of nodes but CPU core(100 nodes 10 CPU cores), and in what cases, on the contrary, few nodes but a lot of CPU cores(5 nodes 200 CPU cores), other parameters are equal?
+Explain the purpose of garbage collection (GC) in Python. What are the key mechanisms Python uses to manage memory and reclaim unused objects?
+How would you estimate a task that is not fully clear? How to avoid overtimes?
+What is the project management methodology on your current project? Does it work for your team fully? If not, what would you change?
+
+1. Could you please explain the architecture of your current project? Have you used any patterns there? How is Delta Lake different from a Data Warehouse with use cases? Do you know any benefits of using a Data Lakehouse?
+2. Can you describe a good Data Pipeline and any best practices you have implemented?
+3. What are the major disadvantages of bucketing in spark? In Spark Dataframe, when writing to a parquet file location, is it possible to overwrite a particular partition instead of overwriting the whole file?
+4. What approaches have you used to test your spark jobs? How do you organize tests for your Spark jobs?
+5. What types of Slowly Changing Dimensions (SCD) do you know, and how do you typically handle SCDs with large data volumes?
+6. How do you estimate tasks on your current project? How would you estimate the task of introducing new technology/library/framework?
+7. What are the steps to choose the best data storage for the use case? What will you do if the architect of your project disagrees with your choice?
+8. Can you please describe how to transfer 10 PB of data from Hadoop to Azure Blob Storage to ensure data integrity? What instruments will you use?
+9. How do you deal with sensitive/PII data in your pipelines? What approaches of data masking do you know?
+10. Please describe a CI/CD process on your current project. What is the difference between CI and Continuous Delivery and Continuous Deployment? what is a ""good"" CI/CD pipeline like and what do you do to implement it fast and efficiently?
+11. Let's say you have a Spark query that is very slow in comparison to SLA (say 40min vs 5min) - how will you find cause of this performance issue?
+12. Can you compare the Scrum and Kanban development processes regarding their planning aspects? Is it accurate to claim that Kanban lacks a planning phase entirely?
+13. How to delegate a task? What should you pay attention to when delegating a task?
+14. How do you manage resources when working on large data sets to ensure costs stay within budget?
+15. How do you enforce data quality checks in your pipelines, use?
+What is the difference between Spark SQL and the Spark DataFrame API in terms of performance? For example, if I implement the exact same logic using Spark SQL (as a query) and with the DataFrame API, which one is likely to perform better at runtime, and why?
+What is the role of the VACUUM command in Databricks? What are its use cases?
+What additional features - especially in the area of security - does Databricks offer compared to vanilla Apache Spark and other
+Spark-based services? Please mention some of the features you have worked with and explain how they enhanced your data processing pipelines or boosted productivity in your projects.
+Please name some of the Azure services you have worked with and categorize them under PaaS, SaaS, and IaaS models. What are the benefits and drawbacks of each service model? In your explanation, please highlight how they differ in terms of control, flexibility, pricing, and typical use cases.
+What is an integration runtime in Azure Data Factory, and specifically, what is a self-hosted integration runtime? What is a classic use case where this type of runtime?
+What is the difference between code quality and data quality? How can we achieve good data quality in ETL pipelines?
+Could you please compare Scrum and Kanban development processes in terms of planning? Is it correct to say that Kanban has no planning phase at all? Which one would you prefer in which cases?
+Tell us about the Data Lakes you have built in your projects. Did you use the Medallion Architecture? What are the advantages and disadvantages of the Medallion Architecture, and what are its alternatives? Which layer do you consider the most important? What is the difference between a Data Lake and a Lakehouse?
+Have you worked with Spark on AWS Cloud? Please compare different methods of launching Spark jobs in AWS Cloud, discussing the advantages and disadvantages of each.
+What formats of semi-structured data are supported by Databricks? What data formats have you used on your projects and why?
+What Delta Lake features do you use on the project?
+What is exception handling in Python and how do you create custom exceptions?
+Can you explain the difference between code quality and data quality? Also, what metrics or parameters would you use to measure each in your project?
+During testing, your QA team discovers a critical bug just days before the scheduled release. How would you manage this situation while ensuring minimal disruption?
+Suppose you have 2 critical tasks to be delivered. How do you prioritize between them?
+What is the difference between a User Defined Function (UDF) and a User Defined Table Function (UDTF) in Spark?
+What does Senior role mean to you? What senior activities do you already do in your day-to-day job?
+How does data skew impact Spark job performance? What techniques have you used to detect and mitigate skew in your pipelines?
+What is Z-ordering in Delta Lake and when would you use it? How is it different from partitioning, and what are the trade-offs?
+How would you design a slowly changing dimension (SCD Type 2) in a data warehouse?
+Can you explain the difference between batch processing and streaming architecture?
+Which development methodology is your favorite? What are the disadvantages of using waterfall?
+How does Spark run the code? Can you explain the plan generation?
+What optimizations does Catalyst perform?
+Could you compare the orchestration mechanism in Databricks and Azure Data Factory?
+Can you explain the hierarchical namespace in Azure Data Lake Gen2?
+You’ve made 100 transactions (updates/inserts/deletes/merges) on a Delta table, and now you query the table. What happens behind the scene in this scenario?
+Can you compare the difference between deep copy and shallow copy in Python.
+What happens when you copy a list with .copy() vs .deepcopy() ? Provide Output for a = [1, 2, [3, 4]]
+Difference between generator and list?
+You’re mentoring a new team member who comes from a completely different technical background and is struggling to keep up. How would you guide them while still meeting your own project deadline?
+You’re in the middle of a sprint, and a critical data pipeline owned by another team is causing delays in your deliverables. The team is unresponsive. How would you handle this situation?
+
+A2 -> A3 Assessment Questions
+Interviewer: Anisha Konda
+What are the key differences between data lakes and data warehouses? In what scenarios would you choose one over the other?
+When designing a data storage solution, what are the key factors you would consider before deciding between a SQL database and a NoSQL database? Please provide examples to support your explanation?
+You need to build a real-time data pipeline to process events from a streaming source (e.g., Kafka) and store the results in a Delta Lake table. What are the key components and considerations?
+If a query’s filter column is partitioned and the file format supports pushdown, how will Spark combine pruning and pushdown for maximum performance?    /sales/year=2022/region=APAC/file.parquet   /sales/year=2022/region=EU/file.parquet   /sales/year=2023/region=APAC/file.parquet
+The schema of your input data changes over time.  How do you handle schema evolution in a data lake environment? How would you ensure your data pipeline can adapt to these changes?
+How would you measure performance of your Spark job? What metrics would you be focused on? What tools/approaches/ would you use for measurement of Decesion it's good or bad?   Lets say w e have 1tb of data during shuffle phase
+How do you handle package management in Python, and what strategies do you use for memory optimization in Python?
+"What is CICD, what is the purpose of using it, what parts does it consist of, do you use it on a project, if so, how What is the best way to implement Rollback mechanism"
+You were asked to do something for which you didn’t have proper technical skills? How will you upskill yourself
+Interviewer: Alexei Sosenkov
+What data format would you use for efficient Apache Spark Streaming jobs?
+Describe data storage optimization techniques in Databricks Delta tables?
+Cons and pros of Azure ADF? What orchestration tool would you choose (if ever had to)?
+Which delivery semantics do you know applied to Apache Kafka? Why we need so many of them? Please provide brief comparation between different semantics in terms of features they provide and performance
+How does Python's Global Interpreter Lock (GIL) affect multi-threading performance in data processing applications?
+Explain ACID properties
+Interviewer: Artem Shupenko
+How is memory persistence addressed in GenAI systems (such as chat applications and agents)?
+Does an LLM have its own state? or memory?
+In plain Python which data structure would you use to efficiently find unique elements in a large dataset?
+Why are set or dict lookups faster than lists?
+What is Lakeflow Spark Declarative Pipelines (formerly DLT - Delta Live Tables) in Databricks, and in which scenarios would you use it instead of manually built Spark pipelines?
+Could you please list your suggestions for cost optimization of data storage in cloud object storage (Azure Blob Storage, Google Cloud Storage, Amazon S3)?
+A customer insists on a task that, in your opinion, is literally impossible to do because of the given constraints. For example, they ask you to migrate several years of historical data to a new platform within one week. How would you communicate this to the customer?
+Imagine you have a low-performing team member in your team. How would you handle the situation?
