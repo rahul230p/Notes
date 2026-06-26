@@ -1,0 +1,102 @@
+Design an ad-impression pipeline that ingests impression events at scale, deduplicates them with
+financial-grade accuracy, and produces a reconciled impression count that we can bill advertisers from.
+
+
+Functional — answers:
+End users:
+
+Ad Operations team — monitors live campaign delivery, pacing, and spend
+Advertiser-facing reporting — external dashboard showing impressions delivered per campaign
+Finance / Revenue team — bills advertisers based on reconciled impression counts
+Data Science / ML — trains ad targeting and auction models
+Legal / Compliance — audit trail for advertiser disputes
+
+Access patterns by downstream:
+ConsumerAccess patternLatency needAd Ops dashboardLive impression counts by campaign< 5 minutesAdvertiser reportingDaily/hourly impression reports< 1 hourFinance billingReconciled exact countsDaily batch, T+1ML feature storeUser-level ad engagement featuresOnline: < 50ms, Offline: < 6 hoursDispute resolutionPoint-in-time exact counts with audit trailOn-demand
+Incoming events — two sources, this is critical:
+Source 1: Ad-serving system (supply side)
+  Emits: impression_served events
+  When:  at moment ad is delivered to client device
+  Format: JSON over Kafka
+  Fields: impression_id, campaign_id, ad_id, user_id,
+          content_id, served_ts, device_type, region
+
+Source 2: Client SDK (demand side)
+  Emits: impression_viewed events
+  When:  when client device confirms ad rendered on screen
+  Format: JSON over HTTP → Kafka
+  Fields: impression_id, user_id, view_ts, viewability_score,
+          quartile (0%, 25%, 50%, 75%, 100% completion)
+
+KEY INSIGHT: both sources emit events for the same impression_id
+             Reconciliation = matching Source 1 vs Source 2
+             Discrepancy = served but not viewed, or viewed but not served
+Feature Store for ML — yes, confirmed:
+
+Online feature store: user-level ad engagement signals for real-time bidding
+Offline feature store: training data for CTR and viewability models
+
+OLAP serving for Ad Ops — yes, confirmed:
+
+Sub-minute aggregations by campaign, ad unit, region
+Slice and dice by device_type, content_id, quartile completion
+
+
+Non-functional — answers:
+Volume:
+
+Ad impression events: 2M events/sec peak (AVOD tier, 50M subscribers)
+Two sources × 2M = up to 4M events/sec total ingestion
+Each event: ~1 KB (richer payload than viewership events)
+Peak ingestion throughput: ~4 GB/sec
+
+Latency SLA:
+LayerSLAAd Ops live dashboard< 5 minutesAdvertiser hourly report< 1 hourFinance billing reconciliationT+1 (next day, exact counts)ML online features< 50ms serving
+Data retention:
+
+Raw impression events: 7 years (financial records — advertiser billing disputes can come years later)
+Aggregated campaign metrics: 7 years
+Audit log of reconciliation runs: 7 years immutable
+Note: this is significantly longer than viewership (90 days) — financial data has different retention rules
+
+PII:
+
+user_id is PII — mask at stream processing layer
+Advertiser reports must never contain user-level PII — only aggregated counts
+ML features: pseudonymised user_id (tokenized, not raw)
+
+Spikes:
+
+Predictable spikes: primetime (8–11pm), live sports, award shows
+Spike multiplier: 5x on baseline (less extreme than viewership because AVOD is a subset of total subscribers)
+Ad auctions also spike during high-value content — NBA finals, Oscars
+
+
+Leans forward
+"You flagged the two most important downstream consumers immediately — Feature Store and OLAP. Good instincts.
+Now — before sizing, I want you to understand the core problem you're solving. I told you in the brief: $4M revenue discrepancy last quarter from duplicate counting and lost impressions.
+
+
+
+impression_payload - {
+impression_id,
+event_ts,
+user_id,
+device_type,
+status
+}
+
+Back of envelope Calculation-
+No of events/sec = 4M/sec
+Ingestion throughput = 4gb/sec at 1kb/event
+Spikes events = 5x = 20gb/sec
+
+Data volume for historical = approx 7gb/sec * 86400 * 365 * 7 = 1.5 PB after compression around 5x for zstd = 300 TB
+Data volume for olap =  approx 7gb/sec * 86400 * 7 days  = 4TB
+
+
+Client SDK -> Rest Proxy -> Kafka -> Flink -> S3
+                                     Flink -> Redis
+                                     FLink -> Snowflake
+
+

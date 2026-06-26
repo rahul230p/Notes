@@ -1,0 +1,49 @@
+Max currently streams to about 100 million subscribers globally. During a live NBA game or a big HBO premiere,
+ we can see viewership spikes of 10x normal traffic —
+  we're talking millions of concurrent stream-start events per minute.
+
+We need a real-time viewership pipeline. The content and product teams need to see live viewer counts,
+ drop-off rates, and buffering metrics as content plays — with no more than 30 seconds of latency end-to-end.
+
+
+Functional Requirements -
+Realtime OLAP
+End Users - content and product teams
+Events - view events
+Realtime Serving Layer With dashboard for teams
+
+
+Non functional -
+SLA - 30 sec
+TAU - 100M
+Spikes - 10x
+Assuming 100 events per user in 1 hour
+PII ?
+
+
+{
+event_id
+event_type -play,buffer,ads,stop
+user_id
+event_ts
+content_id
+}
+
+
+1 session - 50 events per user in 1 hour
+Concurrent viewers = 1/2 of TAU = 50M
+Regular events/sec = 50 * 50M/hour 2.5B/hr
+Spike events = 2.5B * 10 = 25B events/hour around 7M/sec
+
+
+Assuming 1 event = .5 kb
+Ingestion throughput = 3.5 gb/sec
+
+
+
+
+App/Web SDK -> Rest APi proxy -> Kafka(MSK) -> Flink -> S3 (history)
+                                            --> Flink -> Redis -> API-> Dashboards
+
+
+

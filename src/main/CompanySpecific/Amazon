@@ -1,0 +1,161 @@
+Amazon Data Engineer II interview experience
+General
+Hey everyone,
+
+I recently went through the Amazon Data Engineer interview process (Hyderabad) and wanted to share my experience. I didn’t find many detailed India-specific posts while preparing, so hopefully this helps someone.
+
+---
+
+Round 1 – Coding
+
+The first round was a coding round with basic problems. Think LeetCode easy to medium level. Mostly arrays and hashmap-based questions (similar to 2-sum type problems). It wasn’t heavy DSA—no trees or graphs in my case. The intent seemed to be to check whether you can code comfortably.
+
+---
+
+Rounds 2 & 3 – Architecture + Past Experience
+
+These rounds focused heavily on my previous work. There was a deep dive into the pipelines and systems I had built. Questions were around:
+
+End-to-end design of data pipelines
+
+Challenges faced and how I handled them
+
+Trade-offs in design decisions
+
+A lot of follow-ups came from whatever I mentioned, so being clear about your own work is important. My Mastercard experience carried most of these discussions.
+
+---
+
+Round 4 – Deep Data Engineering Concepts
+
+This was the most intense technical round. The focus was on core data engineering concepts like:
+
+Query optimization
+
+Partitioning strategies
+
+Index vs query rewrite vs data model changes
+
+They were not just looking for answers but for reasoning. For almost every answer, there were follow-up questions asking why I chose that approach over others.
+
+---
+
+Round 5 – Data Modeling
+
+This round was entirely focused on data modeling. I was asked to design a vendor payment system from scratch.
+
+We discussed:
+
+Fact vs dimension tables
+
+Business events and how they map to tables
+
+Granularity decisions
+
+Payment batch vs order-level tracking
+
+Schema design (star vs snowflake)
+
+How to store payment-related information (normalization and security considerations)
+
+SCD types were also asked, so that’s something you should definitely prepare.
+
+---
+
+Round 6 – Bar Raiser (Behavioral)
+
+This was a pure behavioral round based on Amazon Leadership Principles. The questions were detailed and required structured answers with clear examples. This round felt quite important in terms of final decision-making.
+
+---
+
+Overall Takeaways
+
+The process is not focused on heavy DSA. Coding is required, but at a basic level. The main focus areas are:
+
+SQL and data handling
+
+Data modeling
+
+System design for data problems
+
+Real-world experience and decision-making
+
+---
+
+Preparation Advice
+
+Be very strong in SQL (joins, aggregations, window functions)
+
+Know your projects inside out—they will go deep
+
+Be prepared to explain trade-offs, not just solutions
+
+Practice behavioral answers aligned with Amazon leadership principles
+
+---
+
+Overall, the process felt practical and aligned with real data engineering work rather than just theoretical questions.
+
+Happy to answer questions if anyone is preparing.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Amazon Data Engineer II (L5) Interview Experience
+General
+Hi everyone, I recently cleared the loop for Amazon DE 2 role
+
+My exp - 5yrs
+
+Here's my interview experience
+
+OA Round - Check my other post on this sub. The recruiter reached out to me after a month.
+
+Each round was 1hr each, you can ask around 2 qs each round in the end.
+
+Round 1 - Data Modelling
+
+Retail data model for yearly/monthly sales per product, vendor & location. Then SQL queries on top of the data model you created.
+
+Round 2 - ETL
+
+Discussion about project. Streaming v/s Batch use cases, Optimizations on 100GB daily load & 1 Billion rows table.
+
+Round 3 - SQL and Scripting
+
+1 DSA medium question
+
+Given list1 = [(1,"a"), (2,"b"), (4,"c")] and list2 = [(2,"e"), (4,"g"), (7,"h")]*, find all common keys and pair their values. Expected output:* [(2, ("b","e")), (4, ("c","g"))]
+
+, 2 Medium-Hard SQL questions based on joins, window functions, ranking etc
+
+Round 4 - Performance Optimizations
+
+Deep dive on spark optimizations, data skew, checkpoints, partitioning and indexing for OLTP writes and analytics queries. 1 sql query optimization qs
+
+Round 5 - Bar Raiser
+
+Questions based on Amazon leadership principles.
+
+Each of the other rounds also had 2 leadership principles questions. So prepare the stories well on these. Follow STAR method to answer the questions. Expect them to dive deep into the stories - timelines, learnings, what would you have done differently etc..
+
+Hope it helps!
+
+[Update] - TC range
+
+Base - 35 - 45 LPA
+
+Joining Bonus - 1st year 10L - 20L , 2nd year similar but will be less than first
+
+Stocks - 30L - 40L vested over 4 yrs [ 5%, 15%, 40%, 40% ]
