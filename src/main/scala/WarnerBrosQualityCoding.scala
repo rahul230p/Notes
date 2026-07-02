@@ -68,7 +68,7 @@ object WarnerBrosQualityCoding {
       deduplicateEvents(validEvents)
 
     val watchTimePerUser =
-      aggregateWatchTime(deduplicatedEvents)
+      aggregateWatchTime(deduplicatedEvents.toList)
 
     topKUsers(watchTimePerUser, k)
   }
