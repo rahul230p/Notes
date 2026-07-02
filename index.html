@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rahul Ranjan's interview and data engineering notes.">
+    <title>Rahul's Notes</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230f766e'/%3E%3Cpath d='M18 16h28v32H18z' fill='%23fff'/%3E%3Cpath d='M24 25h16M24 32h16M24 39h10' stroke='%230f766e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Notes navigation">
+        <div class="brand">
+          <div>
+            <p class="eyebrow">Study Library</p>
+            <h1>Rahul's Notes</h1>
+          </div>
+          <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle theme" title="Toggle theme">◐</button>
+        </div>
+
+        <label class="search-box" for="searchInput">
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="Kafka, Spark, SQL..." autocomplete="off">
+        </label>
+
+        <div class="stat-grid" aria-label="Library statistics">
+          <div>
+            <strong id="noteCount">0</strong>
+            <span>notes</span>
+          </div>
+          <div>
+            <strong id="topicCount">0</strong>
+            <span>topics</span>
+          </div>
+        </div>
+
+        <nav class="topic-list" id="topicList" aria-label="Topics"></nav>
+      </aside>
+
+      <main class="main">
+        <section class="library-bar" aria-label="Library filters">
+          <div>
+            <p class="eyebrow">Publish-ready static site</p>
+            <h2 id="activeTitle">All notes</h2>
+          </div>
+          <div class="view-controls" role="group" aria-label="View mode">
+            <button id="listViewButton" class="segmented is-active" type="button">List</button>
+            <button id="readViewButton" class="segmented" type="button">Read</button>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <div class="note-list-panel" id="noteListPanel">
+            <div class="note-list-header">
+              <span id="resultCount">0 results</span>
+              <select id="sortSelect" aria-label="Sort notes">
+                <option value="title">Sort by title</option>
+                <option value="category">Sort by topic</option>
+                <option value="words">Sort by length</option>
+              </select>
+            </div>
+            <div class="note-list" id="noteList"></div>
+          </div>
+
+          <article class="reader" id="reader" tabindex="-1">
+            <div class="empty-state" id="emptyState">
+              <p class="eyebrow">Choose a note</p>
+              <h2>Your searchable publishing site is ready.</h2>
+              <p>Select a note from the list, search across the collection, or filter by topic from the left.</p>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="notes-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
