@@ -1,4 +1,0 @@
-Design a real-time clickstream data pipeline for a large-scale e-commerce platform.
-The system needs to capture user behavior, page views, clicks, add-to-cart events, and purchases, across web and mobile,
-and process this data to power targeted ad campaigns. Expect around 500K events per second at peak.
- How would you design this end to end?
